@@ -5,3 +5,12 @@ GET http://localhost:1234/info
 
 ###
 DELETE http://localhost:1234/api/persons/1
+
+###
+POST http://localhost:1234/api/persons
+content-type: application/json
+
+{
+  "name" : "Jahdiel",
+  "number" : "424-454845"
+}
