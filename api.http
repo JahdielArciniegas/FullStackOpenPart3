@@ -2,3 +2,6 @@ GET http://localhost:1234/api/persons
 
 ###
 GET http://localhost:1234/info
+
+###
+DELETE http://localhost:1234/api/persons/1
