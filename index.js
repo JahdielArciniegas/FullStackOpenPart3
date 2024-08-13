@@ -1,6 +1,9 @@
 const express = require("express")
 const app = express()
+const morgan = require("morgan")
 app.use(express.json())
+app.use(morgan('tiny'))
+
 
 const generatorId = () => {
   const maxId = persons.length > 0 ? Math.max(...persons.map(n=> n.id)):0
@@ -69,9 +72,21 @@ app.post("/api/persons", (request, response)=> {
   if(!body.number){
     return response.status(400).json({error : "number missing"})
   }
-  if(persons.map(person => person.name.toLowerCase() === body.name.toLowerCase())){
+  
+  const truePerson = (persons.find(person => {
+    if(person.name.toLowerCase() === body.name.toLowerCase()){
+      return true
+    }
+    return
+  } ))
+
+  if(truePerson){
+    {
     return response.status(400).json({error : "name must be unique"})
   }
+  }
+  
+  
   
   const person = {
     name : body.name,
