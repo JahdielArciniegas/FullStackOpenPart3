@@ -36,11 +36,12 @@ let persons = [
   }
 ]
 
+
 app.get("/api/persons",(request,response) => {
   response.json(persons)
 } )
 
-app.get("/info", (request, response) => {
+app.get("/", (request, response) => {
   const message = `Phonebook has info for ${persons.length} people`
   const now = new Date()
   response.send(message + "<br/>" +now)
@@ -100,7 +101,7 @@ app.post("/api/persons", (request, response)=> {
   response.json(person)
 })
 
-const PORT = 1234
+const PORT = process.env.PORT || 1234
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
