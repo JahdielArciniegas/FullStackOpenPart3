@@ -41,7 +41,7 @@ app.get("/api/persons",(request,response) => {
   response.json(persons)
 } )
 
-app.get("/", (request, response) => {
+app.get("/info", (request, response) => {
   const message = `Phonebook has info for ${persons.length} people`
   const now = new Date()
   response.send(message + "<br/>" +now)
