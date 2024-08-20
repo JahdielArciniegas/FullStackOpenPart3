@@ -4,12 +4,17 @@ mongoose.set('strictQuery', false)
 
 const url = process.env.URL_MONGO_DB
 
-console.log('connecting to', url)
-mongoose.connect(url).then(result => {
+async function connectDB() {
+  console.log('connecting to', url)
+  await mongoose.connect(url).then(result => {
   console.log('connected to MongoDB')
 }).catch((error) => {
   console.log('error conneting to MongoDB:', error.message)
 })
+}
+
+connectDB()
+
 
 const personSchema =  new mongoose.Schema({
   name: String,
