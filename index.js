@@ -5,8 +5,6 @@ require('dotenv').config()
 
 const Person = require('./models/person')
 
-let persons = [
-]
 app.use(express.static('dist'))
 const cors = require("cors")
 const person = require("./models/person")
@@ -27,9 +25,11 @@ app.get("/api/persons",(request,response) => {
 } )
 
 app.get("/info", (request, response) => {
-  const message = `Phonebook has info for ${persons.length} people`
-  const now = new Date()
-  response.send(message + "<br/>" +now)
+  Person.countDocuments({}).then(count => {
+    const message = `Phonebook has info for ${count} people`;
+    const now = new Date();
+    response.send(message + "<br/>" + now);
+  });
 })
 
 app.get("/api/persons/:id", (request, response) => {
@@ -39,19 +39,14 @@ app.get("/api/persons/:id", (request, response) => {
 })
 
 app.delete("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
   Person.findByIdAndDelete(request.params.id).then(res => {
-    response.status(204).end
+    res.status(204).end
   })
   Person.deleteOne({name : person.name})
-
-  response.status(204).end()
 })
 
 app.put("/api/persons/:id", (request, response) => {
   const body = request.body
-  const id = Number(request.params.id)
   const person ={
     name : body.name,
     number : body.number
