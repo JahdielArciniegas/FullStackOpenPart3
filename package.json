@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:frontend": "cd ../../FullStackOpen/Part 2/telephoneagency && npm run build && cp -r dist ../../FullStackOpenPart3/telephoneagencybackend/dist",
+    "start:with-frontend": "npm run build:frontend && npm start"
   },
   "author": "",
   "license": "ISC",
