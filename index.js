@@ -18,7 +18,7 @@ const unknownEndpoint = (request, response)=> {
   response.status(404).send({error: 'unknown endpoint'})
 }
 
-app.get("/api/persons",(request,response) => {
+app.get("/api/persons",(request,response,) => {
   Person.find({}).then(persons => {
     response.json(persons)
   })
@@ -32,17 +32,21 @@ app.get("/info", (request, response) => {
   });
 })
 
-app.get("/api/persons/:id", (request, response) => {
+app.get("/api/persons/:id", (request, response, next) => {
   Person.findById(request.params.id).then(person => {
-    response.json(person)
-  })
+    if(person){
+      response.json(person)
+    }else{
+      response.status(404).end
+    }
+  }).catch(error => next(error))
 })
 
-app.delete("/api/persons/:id", (request, response) => {
-  Person.findByIdAndDelete(request.params.id).then(res => {
+app.delete("/api/persons/:id", (request, response,next) => {
+  Person.findByIdAndDelete(request.params.id).then(result => {
     response.status(204).end()
   })
-  Person.deleteOne({name : person.name})
+  .catch(error => next(error))
 })
 
 app.put("/api/persons/:id", (request, response) => {
@@ -56,10 +60,7 @@ app.put("/api/persons/:id", (request, response) => {
     response.json(updatePerson)
     console.log(updatePerson)
   })
-  .catch(error => {
-    console.error(error);
-    response.status(400).send({ error: "malformatted id" });
-  });
+  .catch(error => next(error) );
 
 })
 
@@ -87,8 +88,6 @@ app.post("/api/persons", (request, response)=> {
   // }
   // }
   
-  
-  
   const person = new Person({
     name : body.name,
     number: body.number,
@@ -99,10 +98,24 @@ app.post("/api/persons", (request, response)=> {
   })
 })
 
+
+
 app.use(unknownEndpoint)
 
+const errorHandle = (error, request, response, next) => {
+  console.log(error.message)
+
+  if(error.name === 'CastError') {
+    return response.status(400).send({error : 'malformatted id'})
+  }
+
+  next(error)
+} 
+
+app.use(errorHandle)
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
