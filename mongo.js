@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/js/linebreak-style */
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
@@ -9,7 +10,7 @@ const password = process.argv[2]
 const name = process.argv[3]
 const number = String(process.argv[4])
 
-const mongoUri = `mongodb+srv://JahdielArciniegas:${password}@cluster0.ualcr.mongodb.net/phonebook?retryWrites=true&w=majority&appName=Cluster0` 
+const mongoUri = `mongodb+srv://JahdielArciniegas:${password}@cluster0.ualcr.mongodb.net/phonebook?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
 
@@ -17,40 +18,40 @@ mongoose.set('strictQuery', false)
 if(name && number){
   mongoose.connect(mongoUri)
 
-const personSchema =  new mongoose.Schema({
-  name: String,
-  number: String
-})
+  const personSchema =  new mongoose.Schema({
+    name: String,
+    number: String
+  })
 
-const Person = mongoose.model('Person', personSchema)
+  const Person = mongoose.model('Person', personSchema)
 
-const person =  new Person({
-  name: `${name}`,
-  number: `${number}`
-})
+  const person =  new Person({
+    name: `${name}`,
+    number: `${number}`
+  })
 
-person.save().then(result =>{
-  console.log('person saved!')
-  mongoose.connection.close()
-})
+  person.save().then(result => {
+    console.log('person saved!')
+    mongoose.connection.close()
+  })
 }else{
   mongoose.connect(mongoUri)
 
-const personSchema =  new mongoose.Schema({
-  name: String,
-  number: String
-})
-
-const Person = mongoose.model('Person', personSchema)
-
-
-
-
-Person.find({}).then(result => {
-  result.forEach(person => {
-    console.log(person.name, person.number)
+  const personSchema =  new mongoose.Schema({
+    name: String,
+    number: String
   })
-  mongoose.connection.close()
-})
+
+  const Person = mongoose.model('Person', personSchema)
+
+
+
+
+  Person.find({}).then(result => {
+    result.forEach(person => {
+      console.log(person.name, person.number)
+    })
+    mongoose.connection.close()
+  })
 }
 

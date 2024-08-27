@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:frontend": "cd ../../FullStackOpen/Part 2/telephoneagency && npm run build && cp -r dist ../../../FullStackOpenPart3/telephoneagencybackend/dist",
-    "start:with-frontend": "npm run build:frontend && npm start"
+    "start:with-frontend": "npm run build:frontend && npm start",
+    "lint" : "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,10 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@stylistic/eslint-plugin-js": "^2.6.4",
+    "eslint": "^9.9.1",
+    "globals": "^15.9.0",
     "nodemon": "^3.1.4"
   }
 }
