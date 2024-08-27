@@ -40,7 +40,7 @@ app.get("/api/persons/:id", (request, response) => {
 
 app.delete("/api/persons/:id", (request, response) => {
   Person.findByIdAndDelete(request.params.id).then(res => {
-    res.status(204).end
+    response.status(204).end()
   })
   Person.deleteOne({name : person.name})
 })
@@ -74,18 +74,18 @@ app.post("/api/persons", (request, response)=> {
     return response.status(400).json({error : "number missing"})
   }
   
-  const truePerson = (persons.find(person => {
-    if(person.name.toLowerCase() === body.name.toLowerCase()){
-      return true
-    }
-    return
-  } ))
+  // const truePerson = (persons.find(person => {
+  //   if(person.name.toLowerCase() === body.name.toLowerCase()){
+  //     return true
+  //   }
+  //   return
+  // } ))
 
-  if(truePerson){
-    {
-    return response.status(400).json({error : "name must be unique"})
-  }
-  }
+  // if(truePerson){
+  //   {
+  //   return response.status(400).json({error : "name must be unique"})
+  // }
+  // }
   
   
   
